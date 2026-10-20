@@ -8,6 +8,32 @@ Evaluate **`deepseek-flash` on the 500 published CriticLeanBench cases, using ea
 
 The public data and prompts are fixed. The authors' complete decoder, runtime and scorer are not publicly specified, so this is a **replacement evaluation using the published inputs**, not a claim that every private implementation detail of the paper is reproduced.
 
+## View the completed results
+
+**Viewing saved results requires no Python installation, dataset download, API key, or rerun.** After cloning, open this file in a browser:
+
+```text
+reports/deepseek-bench500-combined-v1-v2/report.html
+```
+
+```bash
+git clone https://github.com/gjc2/CriticLean.git
+cd CriticLean
+# macOS; on Windows or Linux, open the file in a browser from your file manager
+open reports/deepseek-bench500-combined-v1-v2/report.html
+```
+
+| Entry | Contents |
+| --- | --- |
+| [Combined HTML analysis](reports/deepseek-bench500-combined-v1-v2/report.html) | Metrics for all 500 cases, the two-stage protocol, and searchable, expandable details for 79 label disagreements |
+| [Original 500-case HTML analysis](reports/deepseek-bench500-v1/analysis/report.html) | Original analysis and technical failures under the 8192-token output cap |
+| [All 500 per-case results](reports/deepseek-bench500-combined-v1-v2/combined/per-case.csv) | Published labels, model labels, and technical status for the combined results |
+| [Per-case results after offline reparsing](reports/deepseek-bench500-combined-v1-v2/combined-reparsed/per-case.csv) | A separate derived version recovering one saved explicit label |
+
+The HTML includes its styles, scripts, and report content, so browsing, searching, and expanding details work offline. The original records and attachments in `runs/` and `reports/` are committed too. Keep the cloned directory structure so relative links work; copying only an HTML file omits its linked CSVs, JSON files, and raw traces. GitHub's HTML file page displays source code; open the local file to view the rendered report.
+
+The original 500-case run scored **389/500 (77.8%)**. Keeping 448 predictions and replacing exactly the 52 output-truncated predictions with their rerun results yields **419/500 (83.8%)**. A separate offline reparse yields **420/500 (84.0%)**. This two-stage protocol used 552 requests, excluding connection checks; it is not a fresh 500-case run under the new output budget. Expandable HTML details cover 79 label disagreements; the per-case CSV covers all 500 cases, with original inputs and responses preserved in `runs/`.
+
 ## What stays fixed
 
 | Component | Evaluation condition |

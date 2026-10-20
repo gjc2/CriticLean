@@ -8,6 +8,32 @@
 
 本项目使用作者**发布数据内的原始 `messages`**。作者完整解码参数、运行环境及评分脚本未全部公开，因此我们能固定公开输入和任务，不能声称逐项复现论文私有实验条件。历史实验文件与当前新协议的结果须分开保存。
 
+## 直接查看已完成的实验结果
+
+**只看结果无需安装 Python、下载数据、配置 API 密钥或重新运行实验。** 克隆仓库后，用浏览器打开：
+
+```text
+reports/deepseek-bench500-combined-v1-v2/report.html
+```
+
+```bash
+git clone https://github.com/gjc2/CriticLean.git
+cd CriticLean
+# macOS；Windows 或 Linux 可在文件管理器中用浏览器打开上述文件
+open reports/deepseek-bench500-combined-v1-v2/report.html
+```
+
+| 入口 | 内容 |
+| --- | --- |
+| [合并分析 HTML](reports/deepseek-bench500-combined-v1-v2/report.html) | 500 条总体指标、两阶段实验说明、79 条标签分歧的搜索与展开详情 |
+| [原始 500 条 HTML](reports/deepseek-bench500-v1/analysis/report.html) | 8192 输出预算下的原始分析和技术失败记录 |
+| [全部 500 条逐题对照](reports/deepseek-bench500-combined-v1-v2/combined/per-case.csv) | 主合并结果的公开标签、模型标签和技术状态 |
+| [离线重解析后的逐题对照](reports/deepseek-bench500-combined-v1-v2/combined-reparsed/per-case.csv) | 单独恢复一条已有显式标签的派生结果 |
+
+HTML 的样式、脚本和正文均已内嵌，可离线浏览、搜索和展开详情。`runs/` 与 `reports/` 的原始记录和附件也已提交；保留 clone 后的目录结构，报告中的相对链接即可正常打开。只复制一个 HTML 文件会遗漏链接指向的 CSV、JSON 和原始 trace。GitHub 的 HTML 文件页面显示源码；查看排版后的报告请打开本地文件。
+
+原始 500 条为 **389/500（77.8%）**；保留其中 448 条、用 52 条截断样本的补跑结果替换后为 **419/500（83.8%）**；另列的离线重解析版本为 **420/500（84.0%）**。两阶段共 552 次请求，不含连接测试；并非全部 500 条都在新预算下重新运行。HTML 展开详情覆盖 79 条标签分歧，全部 500 条的结果在逐题 CSV 中，原始输入和回复保存在 `runs/`。
+
 ## 实验中什么保持一致
 
 | 项目 | 本实验处理 |
