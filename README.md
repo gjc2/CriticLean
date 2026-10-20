@@ -221,8 +221,8 @@ lean-critic-lab/
 ├── docs/protocol.md            # 来源、保持项及复现边界
 ├── docs/results.md             # 标签、指标与失败解释
 ├── data/                      # 本地数据，不提交
-├── runs/                      # 原始实验记录，不提交
-├── reports/                   # 本地评分，不提交
+├── runs/                      # 原始实验记录，可纳入版本控制
+├── reports/                   # 评估结果，可纳入版本控制
 ├── RELEASE_FILES.txt          # 发布源码白名单
 └── Makefile
 ```
@@ -240,7 +240,16 @@ make github-dir
 
 `make check` 不调用真实 API，验证数据处理、原提示保留、标签提取、失败处理及评分流程；通过不代表模型有良好检测效果。`make release` 按 `RELEASE_FILES.txt` 导出 `releases/lean-critic-lab.zip` 及校验信息；`make github-dir` 导出同一白名单的干净源码目录 `releases/lean-critic-lab-github/`，其中没有 `.git`。
 
-**当前目录可能位于更大的父 Git 仓库里。请先导出，再在独立目录提交，避免带上父项目和本地实验记录。** 下面的目标目录应尚不存在：
+当前项目已初始化为独立 Git 仓库并配置远程地址时，可以直接提交运行记录和评估结果，无需重复导出或初始化：
+
+```bash
+git add .gitignore README.md README.en.md NOTICE runs reports
+git status --short
+git commit -m "Add experiment records and evaluation results"
+git push
+```
+
+**下面的导出流程适用于另建仅含干净源码的全新仓库。** 如果源码位于更大的父 Git 仓库里，先导出再从独立目录提交，避免带上父项目。下面的目标目录应尚不存在：
 
 ```bash
 mkdir -p ~/Projects
@@ -261,7 +270,7 @@ git remote add origin https://github.com/YOUR_ACCOUNT/lean-critic-lab.git
 git push -u origin main
 ```
 
-`.gitignore` 与发布白名单会排除 `.venv`、数据、运行、评分、导出物、旧工程归档及密钥文件。提交前仍应检查 `git status`，不要使用强制添加来绕过排除规则。发布结果时，建议另建经过审查的结果附件，注明模型、日期、配置、样本数、技术失败数及数据版本；本工程不会自动上传任何内容。
+`.gitignore` 允许提交 `runs/` 和 `reports/`，仍排除环境目录（如 `.venv`）、`data/`、`releases/`、密钥文件及旧工程归档。`make release` 和 `make github-dir` 仍按 `RELEASE_FILES.txt` 白名单仅导出源码，不包含 `runs/` 或 `reports/`。提交前检查 `git status`，不要使用强制添加来绕过排除规则。发布结果时保留完整实验记录，并注明模型、日期、配置、样本数、技术失败数及数据版本；本工程不会自动上传任何内容。
 
 原创代码和文档使用 MIT；第三方数据和引用内容保留各自许可，见 [LICENSE](LICENSE) 与 [NOTICE](NOTICE)。
 

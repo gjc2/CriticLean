@@ -1,0 +1,150 @@
+{
+  "request_id": "df727a97f396fac3-critic-0",
+  "stage": "critic",
+  "attempt": 1,
+  "task": {
+    "request_id": "df727a97f396fac3-critic-0",
+    "case_id": "case_8b2f2c6985121b1d3c1197b1",
+    "stage": "critic",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Role: Lean & Formal Verification Expert\n\nInput:\n- Mathematical_Text: A math problem and its answer (no proof).\n- Lean4Code: A Lean 4 theorem statement formalizing the problem. Proof is intentionally omitted (e.g., sorry).\n\nGoal:\nDetermine if the Lean theorem statement is an exact and faithful formalization of the mathematical problem.  \n**Do not evaluate or consider the answer or the proof. Your sole task is to verify the correctness of the formalization.**\n\nEvaluation Stages (All required):\n\n1. Mathematical Text Analysis  \n   Identify all structurally and semantically relevant components of the mathematical problem, including variables, types, quantifiers, constraints, logic structure, conclusion, and so on. The analysis should be based on the actual content of the text.\n\n2. Lean4 Code Analysis (ignore proof part)  \n   Extract all structurally and semantically relevant components from the Lean statement, including variables, types, conditions, quantifiers, constraints, the final claim, and so on. The analysis should reflect the actual content present in the Lean code.\n\n3. Comparative Analysis  \n   Check for exact correspondence between the math and Lean statements; you may refer to aspects like:\n   - Semantic alignment, logic structure, and quantifier correctness.\n   - Preservation of constraints and boundary assumptions.\n   - Accurate typing and use of variables.\n   - Strict adherence to Lean's specific syntactic and semantic rules in interpreting the Lean code.\n   - Syntactic validity and proper Lean usage (free from errors).\n   - Use of symbols and constructs without semantic drift.\n   - No missing elements, no unjustified additions, and no automatic corrections or completions.\n\n4. Accuracy Confirmation  \n   If correct: clearly confirm why all elements match.  \n   If incorrect: list all mismatches and explain how each one affects correctness.\n\nNote: While the analysis may be broad and open to interpreting all relevant features, the final judgment must be based only on what is explicitly and formally expressed in the Lean statement.  \n**Do not consider or assess any part of the proof. Your judgment should be entirely about the accuracy of the statement formalization.**\n\nOutput Format:\nReturn exactly one JSON object:\n```json\n{\n    \"reasons\": \"\\\\n1. Mathematical Text Analysis: [...]\\\\n2.  Lean4 Code Analysis (: [...]\\\\n3. Comparative Analysis: [...]\\\\n4. Accuracy Confirmation: [...match confirmation or list of discrepancies...]\",\n    \"is_assistant_correct\": \"[Correct/Incorrect]\"\n}\n```\n\n— Start of Mathematical_Text —\nEvaluate the line integral \\( \\oint\\limits_{C} xy^2dx +x^2ydy+z^3dz \\) using Stokes' theorem, where \\( C \\) is the curve of intersection of the plane \\( x+y+z=1 \\) and the cylinder \\( x^2 +y^2=4 \\), oriented counterclockwise when viewed from above. \n Prove that the answer is 0.\n— End of Mathematical_Text —\n\n— Start of Lean4Code —\nimport Mathlib\n\nopen Real Set\nopen scoped BigOperators\n\n\ntheorem line_integral (C : Set (EuclideanSpace ℝ (Fin 3)))\n (hC : C = {p : EuclideanSpace ℝ (Fin 3) | p 0 + p 1 + p 2 = 1 ∧ p 0 ^ 2 + p 1 ^ 2 = 4}) :\n ∫ p in C, p 0 * p 1 ^ 2 + p 0 ^ 2 * p 1 + p 2 ^ 3 = 0 :=\nsorry\n— End of Lean4Code —"
+      }
+    ]
+  },
+  "task_sha256": "936710c5cec7d46fdec388837443a6edce1692e59d7f73c3eb944d04c06ff35c",
+  "provider": {
+    "type": "deepseek",
+    "model": "deepseek-flash",
+    "base_url": "https://api.deepseek.com",
+    "api_key_env": "DEEPSEEK_API_KEY",
+    "structured_output": false,
+    "reasoning_effort": "high"
+  },
+  "source_sha256": "456a6688a1a0f566bed66e7bdc17516f05fbc528ba9fe88132cafa9dbca803ce",
+  "candidate_sha256": "b9a8b50647bce1d9688d1fccf07dda1b1537d4805c9a881f87ecd077a5ed5305",
+  "requested_output_token_cap": 8192,
+  "status": "parsed",
+  "usage": {
+    "input_tokens": 774,
+    "output_tokens": 3674,
+    "total_tokens": 4448,
+    "cached_input_tokens": 512,
+    "reasoning_output_tokens": 3275,
+    "cost_usd": null
+  },
+  "cost_usd": null,
+  "dispatched_at_utc": "2026-10-19T14:31:56.614971+00:00",
+  "response_text": "{\n  \"reasons\": \"1. Mathematical Text Analysis: The problem is to evaluate the oriented line integral ∮_C (x y^2 dx + x^2 y dy + z^3 dz), where C is the curve of intersection x+y+z=1 and x^2+y^2=4, oriented counterclockwise when viewed from above, and the claimed value is 0.\\n2. Lean4 Code Analysis: The Lean statement introduces an arbitrary set C in Euclidean 3-space with hC: C = {p | p 0 + p 1 + p 2 = 1 ∧ p 0^2 + p 1^2 = 4}. Its conclusion is ∫ p in C, (p 0 * p 1^2 + p 0^2 * p 1 + p 2^3) = 0. This is a set integral of a scalar function over a subset of R^3, using the ambient measure, not an oriented line integral of a differential form.\\n3. Comparative Analysis: The intersection equations are represented by hC, but the central object is a line integral of the 1-form x y^2 dx + x^2 y dy + z^3 dz over an oriented curve. The Lean expression instead integrates the scalar function x y^2 + x^2 y + z^3 over the set C. It lacks the differentials dx, dy, dz, tangent/parametrization data, and the counterclockwise orientation. Even if interpreted as a scalar line integral, it would not match the given differential-form line integral.\\n4. Accuracy Confirmation: The formalization is not faithful. The mismatches are: wrong integral type, wrong integrand, missing differentials/tangent components, and missing orientation. Therefore the Lean theorem does not accurately state the original mathematical problem.\",\n  \"is_assistant_correct\": \"Incorrect\"\n}",
+  "metadata": {
+    "endpoint": "https://api.deepseek.com/responses",
+    "request_body_sha256": "f879d6565db4937b0c3d0a84a709315990a34c50161dab9ec2f857e9a7a7e3cc",
+    "request_parameters": {
+      "model": "deepseek-flash",
+      "max_output_tokens": 8192,
+      "reasoning": {
+        "effort": "high"
+      }
+    },
+    "billing_status": "unknown",
+    "usage_provenance": "provider_response",
+    "request_id": null,
+    "latency_seconds": 18.729003874585032,
+    "status": "completed",
+    "truncated": false,
+    "refused": false,
+    "response_id": "9fbad50d-0100-46c9-af72-de9a1d14cc23",
+    "model": "deepseek-flash",
+    "response_json": {
+      "id": "9fbad50d-0100-46c9-af72-de9a1d14cc23",
+      "object": "response",
+      "created_at": 1792420317,
+      "status": "completed",
+      "background": false,
+      "completed_at": 1792420335,
+      "content_filters": null,
+      "error": null,
+      "frequency_penalty": 0.0,
+      "incomplete_details": null,
+      "instructions": null,
+      "max_output_tokens": 8192,
+      "max_tool_calls": null,
+      "model": "deepseek-flash",
+      "moderation": null,
+      "output": [
+        {
+          "type": "reasoning",
+          "id": "aea56be4-ece1-4f6e-be4d-cc728d5fec41",
+          "status": "completed",
+          "content": [
+            {
+              "type": "reasoning_text",
+              "text": "We need answer JSON only. Need evaluate formalization. Need inspect Lean code. We need determine if theorem statement faithful to math problem. Need not assess proof. Need understand Lean code. The theorem: line_integral (C : Set (EuclideanSpace ℝ (Fin 3))) (hC : C = {p | p0+p1+p2=1 ∧ p0^2+p1^2=4}) : ∫ p in C, p0 * p1 ^2 + p0^2 * p1 + p2^3 = 0 := sorry.\n\nThis is a measure/integral over set C with respect to? In Lean, notation ∫ p in C, f p is Bochner/Lebesgue integral over set C with volume measure on ambient, not line integral over curve. C as set of 3D points is a 1-dimensional curve (surface? intersection plane + cylinder in R3). Lebesgue measure in R3 of curve is zero, so integral over set C w.r.t volume = 0 trivially (if integrable?). But original problem is line integral of differential form xy^2 dx + x^2 y dy + z^3 dz over curve. The expression in Lean `p 0 * p 1 ^ 2 + p 0 ^ 2 * p 1 + p 2 ^ 3` is an integrand function, not a differential form or line integral. It lacks dx, dy, dz. If ∫ over C as scalar function w.r.t volume measure, not equal to line integral generally. Also C definition maybe correct set (curve intersection) but oriented? It doesn't include orientation. The line integral counterclockwise viewed from above: orientation matters. Lean integral over set with volume measure has no orientation and no arc length; if it were scalar line integral wrt arclength, no orientation. The expression instead resembles sum of coefficients f = xy^2 + x^2 y + z^3, not vector field dot dr = xy^2 dx + x^2y dy + z^3 dz. So definitely not faithful. Also theorem statement likely typechecks? Need check `∫ p in C, ...` over `Set` with `p : EuclideanSpace ℝ (Fin 3)` integrates a real function over set with respect to default measure? In mathlib notation `∫ p in C, f p` means integral over `C` (set) under volume measure? It is `∫ p, f p ∂(volume.restrict C)`. If C is a set of points in `EuclideanSpace ℝ (Fin 3)`, finite-dimensional real inner product space. The integrand `p 0 * p 1 ^ 2 + p 0 ^ 2 * p 1 + p 2 ^ 3` likely typechecks because `p 0` where `0 : Fin 3`. Yes.\n\nNeed compare mathematical text. Identify components:\n- Curve C intersection plane x+y+z=1 and cylinder x^2+y^2=4.\n- Oriented counterclockwise viewed from above.\n- Line integral ∮_C xy^2 dx + x^2 y dy + z^3 dz.\n- Prove answer 0. But goal is formalization of problem, not proof. The Lean conclusion says (volume) integral over set C of scalar f = 0.\nMismatches:\n1. Integral type: uses set/volume integral instead of line integral over C (contour integral/1-dimensional oriented path). No parametrization, no differential forms, no curve measure.\n2. Integrand: uses scalar function `xy^2 + x^2y + z^3` rather than a differential 1-form `xy^2 dx + x^2 y dy + z^3 dz`; missing dx,dy,dz. In Lean statement it sums all coefficients; not correct if interpreting as line integral of a vector field with line measure: if line integral wrt arc length would be coefficient times ds, not dot product; but original differential form line integral is dot field with unit tangent times ds. The statement's scalar sum is different.\n3. Orientation: missing; no orientation of C in series, no condition specifying counterclockwise viewed from above. The set C alone doesn't encode orientation. If using set integral, orientation irrelevant.\n4. The set C: `C = {p | p0+p1+p2=1 ∧ p0^2+p1^2=4}`. This captures algebraic intersection. But note in R3, intersection is an ellipse; set definition all points satisfying both. Okay. But no explicit finite? no orientation.\n5. The conclusion being 0: Problem says prove answer 0, but formalization should state line integral equals 0. Lean states different integral equals 0. If maybe integral notation with p in C plus expression with dx? But no.\n6. `C` is arbitrary set with hC equality, not a path/curve object. No differentiability or parameterization; line integral cannot be expressed. It integrates over a subset of R3 as volume measure; if nonzero? measure zero. But as formalization, wrong.\n7. It uses `EuclideanSpace ℝ (Fin 3)` and point coordinates `p 0`, etc. Fine to represent R^3.\n8. The theorem doesn't include \"curve of intersection\" beyond set; maybe hC says exact set. But for line integral, must be a curve, maybe `C` should be a path `γ: ℝ → R^3` or `Path` etc with image equation, orientation. Not present.\n9. No explicit proof? sorry not considered.\n\nNeed produce JSON with reasons string. Need maybe mention Lean syntactic validity? The Lean statement seems syntactically valid? There may be issue with `∫ p in C, ...` requiring `MeasureTheory.MeasureSpace` instance? EuclideanSpace has measure. `p 0` notation works? `EuclideanSpace ℝ (Fin 3)` is `Fin 3 → ℝ`, so can apply p to 0. Need p 0 ^ 2; precedence? `p 0 ^ 2` okay. Maybe type of `∫ p in C` is real. It uses `open Real Set` etc. The theorem has `C : Set (EuclideanSpace ℝ (Fin 3))` and hC equality. Fine.\n\nNeed output exactly one JSON object. The `reasons` string with \\n. It says \"Return exactly one JSON object\" and schema. Need `is_assistant_correct`: \"Incorrect\". Wait what is asking? \"Determine if Lean theorem statement is exact...\" They ask final `is_assistant_correct`: [Correct/Incorrect]. Means assistant is correct if formalization correct? In previous tasks, use \"Correct\" when Lean statement matches. This one incorrect, so \"Incorrect\" or maybe \"is_assistant_correct\": \"False\"? Schema says \"[Correct/Incorrect]\". We'll use \"Incorrect\". Need ensure JSON valid escapes. The reasons string includes quotes? We can avoid unescaped. Use \\n. Need maybe no newline outside? We'll output a JSON object with `reasons` string.\n\nNeed consider if any interpretation could salvage. The mathematical line integral by Stokes maybe 0. Let's compute maybe the formalized volume integral over set C of scalar may also equal 0 due measure zero, but statement not faithful. The problem asks \"using Stokes theorem\" but theorem statement only answer. Formalization should encode line integral. It doesn't. The integrand: If one treats `p0*p1^2 + ...` as a scalar function and integral with line measure ds, that's not same as differential form. The differential form after pullback? Let's examine: Original line integral ∮ xy^2 dx + x^2 y dy + z^3 dz. Since C lies in plane, z=1-x-y. Could evaluate. The integrand is P dx+Q dy+R dz. In Lean, `p 0*p 1^2 + p0^2*p1 + p2^3` is just P+Q+R. Not equivalent. Also no differentials. Maybe they tried to encode expression after parametrization where dx,dy,dz? No, no derivatives. So wrong.\n\nNeed mention answer/proof not considered. The text says \"Prove answer is 0\" but theorem statement with conclusion 0. The final claim matches numerical value but not object.\n\nNeed write concise but sufficient.\n\nPotential issue: Lean's `∫ p in C, ...` might be ambiguous in output: It is not necessarily volume integral? In Mathlib, notation `∫ x in s, f x` is `∫ x, f x ∂(MeasureTheory.Measure.restrict volume s)` for any measure? There's a default measure in context. Since no measure specified, Lean elaborates using `MeasureTheory.MeasureSpace` canonical volume for EuclideanSpace. It is the Lesbesgue integral over set. It is not a curve integral. Need mention.\n\nAlso mathematical text uses `\\oint_C` with orientation counterclockwise. The Lean statement has no `Path`, `Curve`, `LineIntegral`, `intervalIntegral`, or differential form. It integrates a scalar function over a set. This is a semantic mismatch.\n\nCould there be an issue with `hC`: It includes equality with set defined by both constraints. The set is all points satisfying plane and cylinder, yes. But it doesn't assert `C` is a curve; it's just set. The original C is curve of intersection; if the set equality holds, the set indeed is the curve (plus? The intersection of plane and cylinder; cylinder is vertical, plane intersects in ellipse; all points satisfying both; yes exactly a curve, 1D). But as a set, it also includes no orientation. Fine.\n\nNeed maybe mention boundary assumption: no orientation \"counterclockwise when viewed from above\", no \"oriented curve\". In set integral orientation ignored. If line integral, orientation affects sign. Even if one used intervalIntegral over a parametrization, it would have to specify parameterization with correct orientation and image conditions, e.g. r(θ) = (2cosθ, 2sinθ, 1 - 2cosθ - 2sinθ), θ from 0 to 2π; Lean statement lacks. The set equality alone doesn't force clockwise/counter.\n\nNeed maybe mention \"z^3 dz\" coefficient is p2^3 but original differential form has dz, so it contributes z^3 z'(t) dt. Scalar sum adds z^3, different. For vector field line integral: F=(xy^2,x^2y,z^3), dr=(dx,dy,dz), integral F·dr = ∫ (xy^2 x' + x^2 y y' + z^3 z')dt. The Lean expression lacks x',y',z'. If it instead treated as differential form integrated against induced coordinate differentials, not represented.\n\nNeed be precise: In Lean, `p 0 * p 1 ^ 2 + p 0 ^ 2 * p 1 + p 2 ^ 3` is `P+Q+R`, not `P dx+Q dy+R dz`. If one sees `∫ p in C, f p` over line, it is scalar line integral ∫ f ds; original differential form is ∫ (P, Q, R)·T ds, where P=xy^2, Q=x^2y, R=z^3, T unit tangent. Not equal generally, unless tangent component sum =1? Not. So mismatch.\n\nNeed maybe mention theorem statement uses `∫ p in C` with p over C; in Lean no \"∮\". The use of `Set` and measure means not line integral.\n\nQuestion: \"Determine if the Lean theorem statement is an exact and faithful formalization.\" It is not. Final JSON.\n\nLet's craft reasons with 4 numbered sections as requested. Need not too verbose but enough.\n\nShould I include \"Mathematical Text Analysis\" etc. Exactly. The JSON string can have newline escapes. We'll ensure valid JSON. Use `\\n` within string. Use no actual newline? JSON can have escaped \\n. The `reasons` value can be a single line with \\n escapes. Need escape any backslashes? Use standard.\n\nPotential final:\n{\n  \"reasons\": \"1. Mathematical Text Analysis: The problem is to evaluate an oriented line integral ∮_C (x y^2 dx + x^2 y dy + z^3 dz), where C is the oriented curve given by x+y+z=1 and x^2+y^2=4, counterclockwise viewed from above, and the claimed value is 0.\\n2. Lean4 Code Analysis: The Lean statement introduces an arbitrary set C of points in R^3 with hC: C = {p | p0+p1+p2=1 ∧ p0^2+p1^2=4}. Its conclusion is ∫ p in C, (p0*p1^2 + p0^2*p1 + p2^3) = 0. This is a set integral of a scalar function over a subset of Euclidean 3-space (with the ambient measure), not a differential-form/line integral. It does not encode an oriented curve, parametrization, tangent vectors, or differentials dx, dy, dz.\\n3. Comparative Analysis: The set equation for the intersection is largely represented, but the central object of the problem is a line integral of the 1-form x y^2 dx + x^2 y dy + z^3 dz over an oriented curve. The Lean statement instead integrates the scalar function x y^2 + x^2 y + z^3 over the set C with respect to the ambient measure. Missing are the differentials and the contraction with the tangent direction; the orientation/counterclockwise condition is also absent. Even interpreting ∫ over C as a scalar line integral would not match the given differential form, and orientation would still be missing. Thus the conclusion 0 is attached to a different mathematical expression.\\n4. Accuracy Confirmation: The formalization is not faithful. Discrepancies include: wrong integral type (ambient set integral vs oriented line integral), wrong integrand (scalar sum vs differential 1-form), missing differentials/tangent components, and missing curve orientation. Therefore the Lean theorem does not state the original problem accurately.\",\n  \"is_assistant_correct\": \"Incorrect\"\n}\n\nNeed check \"p0*p1^2...\" In Lean `p 0 * p 1 ^ 2` is `(p 0) * ((p 1)^2)`. Fine.\n\nShould I mention \"default measure\" maybe. Yes.\n\nCould there be a possible syntactic error: `open Real Set` but `Set` isn't namespace? `open Real Set` can open namespaces, okay. `open scoped BigOperators` okay. The theorem uses `∫` notation; imported Mathlib provides. `p 0` notation needs `EuclideanSpace` as function. Good.\n\nNeed final only JSON. No markdown. Ensure JSON valid. The string contains `∮`, `∧`, `∫`, etc. Valid Unicode in JSON. Use `^2` okay. Backslashes? We use `\\n` only. Avoid unescaped double quotes. There are no quotes in reasons except maybe none. Use `R^3` with caret; fine. \"one-form\" no. Use `C = {p | ...}` curly braces okay. Fine.\n\nNeed final. "
+            }
+          ],
+          "summary": [],
+          "encrypted_content": "9fbad50d-0100-46c9-af72-de9a1d14cc23-0"
+        },
+        {
+          "type": "message",
+          "id": "22f2f70b-5ce6-4d20-9dcb-8d9f641d36a6",
+          "status": "completed",
+          "content": [
+            {
+              "type": "output_text",
+              "annotations": [],
+              "logprobs": [],
+              "text": "{\n  \"reasons\": \"1. Mathematical Text Analysis: The problem is to evaluate the oriented line integral ∮_C (x y^2 dx + x^2 y dy + z^3 dz), where C is the curve of intersection x+y+z=1 and x^2+y^2=4, oriented counterclockwise when viewed from above, and the claimed value is 0.\\n2. Lean4 Code Analysis: The Lean statement introduces an arbitrary set C in Euclidean 3-space with hC: C = {p | p 0 + p 1 + p 2 = 1 ∧ p 0^2 + p 1^2 = 4}. Its conclusion is ∫ p in C, (p 0 * p 1^2 + p 0^2 * p 1 + p 2^3) = 0. This is a set integral of a scalar function over a subset of R^3, using the ambient measure, not an oriented line integral of a differential form.\\n3. Comparative Analysis: The intersection equations are represented by hC, but the central object is a line integral of the 1-form x y^2 dx + x^2 y dy + z^3 dz over an oriented curve. The Lean expression instead integrates the scalar function x y^2 + x^2 y + z^3 over the set C. It lacks the differentials dx, dy, dz, tangent/parametrization data, and the counterclockwise orientation. Even if interpreted as a scalar line integral, it would not match the given differential-form line integral.\\n4. Accuracy Confirmation: The formalization is not faithful. The mismatches are: wrong integral type, wrong integrand, missing differentials/tangent components, and missing orientation. Therefore the Lean theorem does not accurately state the original mathematical problem.\",\n  \"is_assistant_correct\": \"Incorrect\"\n}"
+            }
+          ],
+          "phase": "final_answer",
+          "role": "assistant"
+        }
+      ],
+      "parallel_tool_calls": true,
+      "presence_penalty": 0.0,
+      "previous_response_id": null,
+      "prompt_cache_key": null,
+      "prompt_cache_retention": null,
+      "reasoning": {
+        "effort": "high",
+        "summary": null
+      },
+      "safety_identifier": null,
+      "service_tier": "default",
+      "store": false,
+      "temperature": 1.0,
+      "text": {
+        "format": {
+          "type": "text"
+        },
+        "verbosity": null
+      },
+      "tool_choice": "auto",
+      "tools": [],
+      "top_logprobs": 0,
+      "top_p": 1.0,
+      "truncation": "disabled",
+      "usage": {
+        "input_tokens": 774,
+        "input_tokens_details": {
+          "cached_tokens": 512
+        },
+        "output_tokens": 3674,
+        "output_tokens_details": {
+          "reasoning_tokens": 3275
+        },
+        "total_tokens": 4448
+      },
+      "user": null,
+      "metadata": {}
+    }
+  },
+  "received_at_utc": "2026-10-19T14:32:15.344942+00:00",
+  "parsed_output": {
+    "reasons": "1. Mathematical Text Analysis: The problem is to evaluate the oriented line integral ∮_C (x y^2 dx + x^2 y dy + z^3 dz), where C is the curve of intersection x+y+z=1 and x^2+y^2=4, oriented counterclockwise when viewed from above, and the claimed value is 0.\n2. Lean4 Code Analysis: The Lean statement introduces an arbitrary set C in Euclidean 3-space with hC: C = {p | p 0 + p 1 + p 2 = 1 ∧ p 0^2 + p 1^2 = 4}. Its conclusion is ∫ p in C, (p 0 * p 1^2 + p 0^2 * p 1 + p 2^3) = 0. This is a set integral of a scalar function over a subset of R^3, using the ambient measure, not an oriented line integral of a differential form.\n3. Comparative Analysis: The intersection equations are represented by hC, but the central object is a line integral of the 1-form x y^2 dx + x^2 y dy + z^3 dz over an oriented curve. The Lean expression instead integrates the scalar function x y^2 + x^2 y + z^3 over the set C. It lacks the differentials dx, dy, dz, tangent/parametrization data, and the counterclockwise orientation. Even if interpreted as a scalar line integral, it would not match the given differential-form line integral.\n4. Accuracy Confirmation: The formalization is not faithful. The mismatches are: wrong integral type, wrong integrand, missing differentials/tangent components, and missing orientation. Therefore the Lean theorem does not accurately state the original mathematical problem.",
+    "is_assistant_correct": "Incorrect"
+  },
+  "label_parser": "json"
+}

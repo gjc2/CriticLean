@@ -1,0 +1,150 @@
+{
+  "request_id": "2959a32b6bf9ca68-critic-0",
+  "stage": "critic",
+  "attempt": 1,
+  "task": {
+    "request_id": "2959a32b6bf9ca68-critic-0",
+    "case_id": "case_c45e266929232646034208e1",
+    "stage": "critic",
+    "messages": [
+      {
+        "role": "user",
+        "content": "You are an expert in Lean 4 and formal methods. Your task is to evaluate whether the assistant has successfully translated a mathematical problem and its answer into correct and meaningful Lean 4 *definitions and theorem statements*.\nIn your evaluation, you should consider whether the assistant's formalization accurately captures the mathematical content and structure *excluding the proofs*. The assessment should focus on whether the Lean code (definitions and statements only):\nRepresents the math problem faithfully and meaningfully.\nExpresses the intended concepts in a coherent and structurally appropriate way\n(e.g., the syntax, type usage, and formulation of definitions or theorems follow Lean’s conventions and make the math meaningfully formal).\nDemonstrates clarity, internal consistency, and alignment with common Lean 4 style.\nMaps the mathematical ideas correctly into Lean constructs\n(e.g., sets, quantifiers, functions, logical operations).\nIs reasonably organized and maintainable.\n\n**Note:**\n    Your evaluation must be based *only* on whether the structure and content of the formalization (definitions, theorem statements) correctly reflect the original mathematical intent.\n   **You must completely ignore the proofs.** You are **not** required to verify the proof itself. The use of `sorry`, `by sorry`, `admit`, any placeholder tactic, or incomplete proof scripts is acceptable and **should not be considered an error**. The correctness, presence, or absence of a proof is **irrelevant** for this task.\n     You must return your evaluation strictly in the following JSON format. Other formats will not be accepted.\n```json\n{\n    \"reasons\": \"Explain whether the Lean code's definitions and statements correctly capture the mathematical intent and structure, noting any major problems or successes in the formalization (ignoring proofs).\",\n    \"is_assistant_correct\": \"[Correct/Incorrect]\"\n}\n```\n\nInput Data:\n— Start of Mathematical_Text —\nFind the number of second-degree polynomials $f(x)$ with integer coefficients and integer zeros for which $f(0)=2010$ .\n Prove that the answer is: 163\n— End of Mathematical_Text —\n— Start of Lean4Code —\nimport Mathlib\n\nopen Polynomial\n\ntheorem aime_all_2010_II_10 :\n    Set.encard {f : ℤ[X] | ∃ a b c : ℤ, f = C a * X ^ 2 + C b * X + C c ∧\n      f.eval 0 = 2010 ∧ (∃ z1 z2 : ℤ, z1 ≠ z2 ∧ f.eval z1 = 0 ∧ f.eval z2 = 0)} = 163 := by sorry\n— End of Lean4Code —"
+      }
+    ]
+  },
+  "task_sha256": "597ddf97c8a6c3997c9f1d359d15344b21a4814ff8b67d09377f059aaaa5b484",
+  "provider": {
+    "type": "deepseek",
+    "model": "deepseek-flash",
+    "base_url": "https://api.deepseek.com",
+    "api_key_env": "DEEPSEEK_API_KEY",
+    "structured_output": false,
+    "reasoning_effort": "high"
+  },
+  "source_sha256": "0143c874179028a2982daf9d1953381ce67049b53c6c1ec1d193301bc8560085",
+  "candidate_sha256": "71126d848ae8ad1f1d841719b2a46c0947a11d3544956014264d42e53d26c175",
+  "requested_output_token_cap": 8192,
+  "status": "parsed",
+  "usage": {
+    "input_tokens": 584,
+    "output_tokens": 4260,
+    "total_tokens": 4844,
+    "cached_input_tokens": 256,
+    "reasoning_output_tokens": 4076,
+    "cost_usd": null
+  },
+  "cost_usd": null,
+  "dispatched_at_utc": "2026-10-19T13:26:42.235042+00:00",
+  "response_text": "{\n  \"reasons\": \"The Lean code correctly models integer-coefficient quadratic-like polynomials in ℤ[X], f(0)=2010, and the finiteness/counting via Set.encard. However, the condition ∃ z1 z2 : ℤ, z1 ≠ z2 ... explicitly requires two distinct integer zeros. The original problem, as reflected by the answer 163, includes repeated integer zeros; for example, polynomials like 2010(x-1)^2 and 2010(x+1)^2 should be counted. Thus the Lean set excludes exactly the repeated-root cases and does not faithfully capture the original problem. The missing explicit nonzero leading coefficient is less critical here because the distinct-root condition implicitly forces degree 2, but a clearer formalization would require degree exactly 2 or a nonzero leading coefficient.\",\n  \"is_assistant_correct\": \"Incorrect\"\n}",
+  "metadata": {
+    "endpoint": "https://api.deepseek.com/responses",
+    "request_body_sha256": "cb5a96adac484ecb0666f7a2e388a22fb5aa5c22f68f2adac5032fb557152339",
+    "request_parameters": {
+      "model": "deepseek-flash",
+      "max_output_tokens": 8192,
+      "reasoning": {
+        "effort": "high"
+      }
+    },
+    "billing_status": "unknown",
+    "usage_provenance": "provider_response",
+    "request_id": null,
+    "latency_seconds": 21.682596415281296,
+    "status": "completed",
+    "truncated": false,
+    "refused": false,
+    "response_id": "d88dc8d7-98d6-4d73-88fb-96bd1a9068dd",
+    "model": "deepseek-flash",
+    "response_json": {
+      "id": "d88dc8d7-98d6-4d73-88fb-96bd1a9068dd",
+      "object": "response",
+      "created_at": 1792416402,
+      "status": "completed",
+      "background": false,
+      "completed_at": 1792416423,
+      "content_filters": null,
+      "error": null,
+      "frequency_penalty": 0.0,
+      "incomplete_details": null,
+      "instructions": null,
+      "max_output_tokens": 8192,
+      "max_tool_calls": null,
+      "model": "deepseek-flash",
+      "moderation": null,
+      "output": [
+        {
+          "type": "reasoning",
+          "id": "7967d41a-14a7-4135-ad9a-88fce633d3cd",
+          "status": "completed",
+          "content": [
+            {
+              "type": "reasoning_text",
+              "text": "We need evaluate if Lean code accurately captures math problem. Need output JSON only. Need analyze. Problem: \"Find number of second-degree polynomials f(x) with integer coefficients and integer zeros for which f(0)=2010. Prove answer 163.\"\n\nLean defines set {f : ℤ[X] | ∃ a b c : ℤ, f = C a * X^2 + C b * X + C c ∧ f.eval 0 = 2010 ∧ (∃ z1 z2 : ℤ, z1 ≠ z2 ∧ f.eval z1=0 ∧ f.eval z2=0)} and says Set.encard = 163.\n\nNeed see if captures \"second-degree polynomials with integer coefficients and integer zeros\". Issues:\n- f : ℤ[X] polynomial over integers. Exists a b c : ℤ, f = C a * X^2 + C b * X + C c. This merely says degree ≤2, not degree exactly 2. To be second-degree need a ≠ 0. Missing. However maybe \"second-degree\" means quadratic, nonzero leading coefficient. Without a ≠ 0 includes linear/constant polynomials. But do those satisfy f(0)=2010 and two distinct integer zeros? A nonzero polynomial of degree ≤1 can't have two distinct integer zeros. A zero polynomial has infinitely many roots and f(0)=0 not 2010. A constant 2010 no roots. Linear can't have two distinct roots. So the additional condition ∃ distinct integer zeros forces a ≠ 0 if representation? Wait could there be polynomial f = C 0 X^2 + C b X + C c with b ≠0 (linear) but cannot have two distinct roots. f with a=0 and b=0 constant no roots. Could a polynomial of degree 0 with all coefficients zero? no f(0)=2010. So with two distinct roots and eval 0 2010, automatically degree at least 2. But expression with a possibly zero: if f has two distinct integer roots, degree at least 2; since expressed as quadratic over ℤ, leading coefficient a must be nonzero. Actually if f = C a*X^2 + ... with a=0 cannot have two roots, so condition ensures a≠0 implicitly. But the existential a b c could choose a=0 only if f has degree ≤1; impossible with two roots and nonzero constant? Need careful: Polynomial over integral domain, degree ≤1 with two distinct roots must be zero polynomial, but eval0 2010 means nonzero, contradiction. So yes any f satisfying is quadratic and a must be nonzero for any representation? Could f be degree 2 but representation with a? Since coefficient uniqueness in polynomial ring over ℤ, if f = C a X^2 + C b X + C c, then a leading coefficient. If degree 2, a ≠0. Good. The missing explicit a ≠ 0 is not a problem because other conditions imply degree exactly 2. Though formal statement doesn't quantify degree directly. But is \"second-degree\" maybe requires exactly degree 2; conditions imply exactly degree 2 due two distinct roots and f(0)=2010, as argued. But wait \"integer zeros\" could mean all zeros? \"integer zeros\" means zeros are integers (the roots). For quadratic, two integer zeros likely counted with multiplicity? The problem says \"with integer coefficients and integer zeros\" and answer 163. Let's examine. Usually \"second-degree polynomial with integer coefficients and integer zeros\" means a quadratic polynomial with integer coefficients whose two roots are integers. It might include double root? The Lean condition requires ∃ z1 z2 : ℤ, z1 ≠ z2 ∧ f.eval z1=0 ∧ f.eval z2=0. So it requires distinct integer zeros. Does original phrase \"integer zeros\" include repeated root? A second-degree polynomial has two zeros (possibly repeated). \"integer zeros\" could mean both zeros (roots with multiplicity) are integers. If repeated, still \"zeros\" maybe one integer? Need determine answer 163. Let's verify with math to see if requiring distinct roots yields 163 or repeated allowed changes. Important.\n\nProblem likely AIME 2010 II Problem 10? Let's recall: \"Find the number of second-degree polynomials f(x) with integer coefficients and integer zeros for which f(0)=2010.\" Answer 163. Let's compute to see if distinct vs repeated.\n\nLet quadratic f(x)=a(x-r)(x-s), with a integer nonzero, r,s integers roots. f(0)=a r s = 2010 (since f(0)=a(0-r)(0-s)=a r s). Actually f(x)=a(x-r)(x-s)=a x^2 - a(r+s)x + a r s. So f(0)=a r s = 2010. Here a∈ℤ\\{0}, r,s∈ℤ (roots). Count distinct polynomials f, not root/scale representations. Each quadratic is determined by a,r,s; representation unique if r,s unordered? f = a(x-r)(x-s), a leading coefficient. If swap r,s same. If roots equal, representation same. Count f (polynomial) with integer coefficients, integer zeros, f(0)=2010. Need count. 2010=2*3*5*67. Need a*r*s=2010. For unordered roots r,s integers. Count unique a given multiset {r,s}? Since a=2010/(rs). Need rs divides 2010? a integer => rs | 2010. But wait r,s can share factors, product can be any divisor of 2010? Since a integer exactly 2010/(rs) integer, so rs divides 2010. r,s integers nonzero (since product divides nonzero). Count unordered pairs (r,s) with product d dividing 2010? Each f corresponds to multiset roots and a determined. Need f quadratic, a nonzero. Also if r=s? a=2010/r^2; require r^2 | 2010. 2010 squarefree? factors all exponent 1, so r^2 | 2010 implies r=±1. So repeated roots possible: r=s=1 gives a=2010, f=2010(x-1)^2; r=s=-1 gives a=2010, f=2010(x+1)^2. Both integer coefficients, zeros integer (double at ±1). Are these counted? If original includes repeated, answer likely includes them. Does count 163 include repeated? Let's calculate.\n\nCount unordered pairs (r,s) ∈ ℤ^2 (r≤? but unordered) such that rs | 2010? But f determined by product d=rs and sum r+s? Wait a depends on rs, but f = a(x-r)(x-s) = a x^2 - a(r+s)x + a rs. If two different multisets {r,s} could yield same polynomial? Suppose same f, roots set (with multiplicity) determined by roots over ℤ. Since a≠0, roots multiset unique. So distinct unordered pairs yield distinct f. So count unordered pairs with rs divides 2010. Actually a=2010/(rs) integer. Since 2010 nonzero, r,s nonzero.\n\nLet N = number of unordered pairs {r,s} integers, possibly equal, with rs | 2010. Let's compute. 2010 squarefree with prime factors p1..p4 (4 primes). Squarefree. Condition rs divides n means for each prime p, v_p(r)+v_p(s) ≤1? Wait v_p(rs) can be negative if r or s has denominator? r,s integers, v_p can be ≥0 or maybe negative? For integer r, v_p(r)≥0 for all primes (with p not dividing r v=0). Product rs integer. For rs to divide 2010, v_p(rs) must be 0 or 1 for p|2010, and for primes not dividing 2010, v_p(rs) must be 0 because divisor of n has no other prime. Since r,s integers, v_p(r),v_p(s) nonnegative. So for each of 4 primes, exponents across r,s sum ≤1. Thus each prime can be assigned to r (exponent 1), to s (exponent1), or neither. That's 3^4 =81 possibilities for positive absolute values. Then signs: r,s nonzero, signs can be independently ±, but product sign affects a? a=2010/(rs). 2010 positive. a can be negative if rs negative. f polynomial may differ if both r,s negated? Let's count unordered signed pairs.\n\nAlternative count ordered pairs (r,s) with rs | n, divide by 2 plus fixed points? N unordered with repetition = (M + F)/2? Where M ordered pairs including equal; F number ordered pairs with r=s (they are fixed under swap). Since swapping roots same. M = number ordered (r,s) with rs | n. For n squarefree with k=4, for each prime assign to r, s, or neither: 3^k. Signs: for each nonzero integer, sign. r,s can each ± independently, so 2^2=4 sign choices for each assignment, but if absolute values zero? r=0 impossible since rs divides n nonzero, so r,s nonzero. Thus M=4*3^4=324. Equal pairs r=s: require r^2 | n. Since n squarefree, |r|=1. r=1 or -1. F=2. N=(324+2)/2=163. Ah! This exactly gives 163. This includes the two repeated roots? Wait M=324 includes r=s=±1 as ordered pairs. N=163. If exclude repeated roots, count would N - 2 =161. Answer 163 includes repeated roots (the two double roots). The Lean code requires z1≠z2, i.e., distinct zeros, thus excludes repeated roots. So the Lean statement is likely false (would be 161) if it counts double roots excluded. But the Lean theorem says encard = 163. However as a statement, it asserts count of polynomials with two distinct integer roots equals 163. That is mathematically incorrect; actual count with distinct roots is 161. Therefore it does not accurately capture original problem because original \"integer zeros\" allows repeated roots? Need be sure. Original problem says \"with integer coefficients and integer zeros\". In contest math, \"zeros\" of quadratic could be roots possibly double? Usually \"integer zeros\" means both zeros are integers, but second-degree polynomial has two zeros (not necessarily distinct); a double root x=1 is an integer zero. They may consider zeros as roots maybe with multiplicity? The answer 163 indicates they include double roots. The Lean condition distinct excludes two polynomials f=2010(x-1)^2 and f=2010(x+1)^2. Thus statement's count 163 is wrong for that filtered set. So formalization incorrect. Need mention.\n\nLet's fully inspect Lean expression:\nSet.encard {f : ℤ[X] | ∃ a b c : ℤ, f = C a * X ^ 2 + C b * X + C c ∧ f.eval 0 = 2010 ∧ (∃ z1 z2 : ℤ, z1 ≠ z2 ∧ f.eval z1 = 0 ∧ f.eval z2 = 0)} = 163\n\nPotential other issues:\n- \"second-degree polynomials with integer coefficients\" ℤ[X] good. But as noted condition ensures degree exactly 2, except distinct roots forces degree at least 2. But if distinct roots and eval0 2010, yes. However if a=0 impossible. So okay.\n- \"integer zeros\" should require both zeros are integers. Because a quadratic over ℤ with f(0)=2010 and two integer roots. The existence of two distinct integer zeros means both roots are integers, yes. For repeated root, need allow z1=z2. Could instead require ∃ z : ℤ, f = C a * (X - C z)^2? But to include distinct too, use ∃ z1 z2 : ℤ, (possibly equal) f.eval z1=0 ∧ f.eval z2=0 with multiplicity? For quadratic, if z1=z2 and f has that root, could be double root or not? A quadratic can have one distinct integer root and another non-integer, and still f.eval z1=0. Need specify both zeros integer accounting multiplicity. The usual formalization: ∃ a r s : ℤ, a ≠0 ∧ f = C a * (X - C r)*(X - C s) perhaps. That includes repeated. Or using roots: f = C a * X^2 + ... and ∃ r s : ℤ, f = C a * (X-C r)*(X-C s) etc. The current condition with z1≠z2 erroneously excludes double roots. If want avoid distinct, need ensure multiplicity? For degree 2, if f has integer coefficients and integer roots (counting multiplicity), simply ∃ z1 z2 : ℤ, f.eval z1=0 ∧ f.eval z2=0 without z1≠z2 doesn't ensure z2 is the other root because if double? Actually if z1=z2=z and z is a root, but if other root non-integer (e.g. f=(x-1)(x-1/2)*2? coefficients integer? Let's check: 2x^2-3x+1 roots 1 and 1/2, f.eval1=0; can choose z1=z2=1, both eval zero, so condition would accept despite not all roots integer. So need multiplicity or representation.\n- The current code with distinct z1,z2 indeed enforces two distinct integer roots, so both roots integer and distinct. But original expects repeated allowed, so off by two. If original intent considered \"integer zeros\" as distinct integer zeros? Let's verify from answer: We calculated answer includes repeated. If they intended distinct zeros, problem likely would say \"with two distinct integer zeros\". Since answer 163 matches including repeated. Thus current formalization incorrect.\n\nNeed formulate evaluation in JSON with reasons and is_assistant_correct Incorrect. Need strictly JSON. Since \"You must completely ignore proofs\" but can mention statement false due missing repeated roots. Need maybe note success: Uses ℤ[X], eval 0, encard. But issue with z1≠z2. Also perhaps missing nonzero leading coefficient? Not major due constraints? Need discuss.\n\nLet's ensure no hidden issue with Set.encard on infinite? The set finite, encard works. The type {f : ℤ[X] | ...} as set of polynomials. Fine.\n\nPotential issue: f = C a * X ^2 + C b * X + C c: In Lean, C a * X^2 perhaps parses as (C a) * (X^2), yes polynomial multiplication. Since then f.eval 0 = 2010. Need c=2010? eval 0 of C a * X^2 + C b * X + C c equals c. So c=2010 automatically. They include b,c arbitrary. Fine.\n\nPotential issue: \"integer coefficients\" ℤ[X] is polynomials with integer coefficients. Good.\n\nPotential issue: \"integer zeros\" could be interpreted as roots are integers, not necessarily distinct. The Lean uses z1≠z2. This excludes double roots. The actual theorem with =163 would be false for distinct roots, but we don't need prove. We just evaluate structural intent.\n\nLet's maybe mention the missing explicit a≠0 not problematic because two distinct roots plus f(0)≠0 imply degree 2. But if we fix repeated roots, need handle multiplicity. Current formalization also only says f can be represented as degree ≤2 with a,b,c. It doesn't state a≠0, but as argued conditions ensure degree 2. If using repeated root (e.g. z1=z2) plus f(0)=2010, could a=0? A linear polynomial cannot have f(0)=2010 and a double root? If only ∃ z1 z2 maybe both same root; a linear can have one root but choose z1=z2 root and still a=0, so missing a≠0 would matter if replacing condition. But current distinct condition avoids. However original problem's \"second-degree\" should explicitly enforce degree 2, perhaps by a≠0 or by degree f =2, to be robust/meaningful. The current condition with distinct roots is enough for current set, but not stylistically direct. If they intended to capture second-degree, absence of a≠0 might be a formal weakness but not semantic error due constraints. However for repeated root fix, need a≠0. In evaluation, can mention \"one should require nonzero leading coefficient or explicitly degree 2, though here the distinct-root condition implicitly forces degree 2; the more important error is excluding repeated integer zeros.\"\n\nLet's consider if there is any possibility the original phrase \"integer zeros\" strictly means two (distinct) integers? In algebra, \"zeros\" of a quadratic often means roots, and a double root is a zero but there is only one integer zero. Does \"zeros\" plural imply two zeros? If a polynomial has a double root, one might still say it has a double zero, i.e., two zeros counting multiplicity. Contest might not consider double root as \"zeros\" plural? But answer 163 confirms inclusion: if excluded repeated, count 161, not 163. Since given answer 163, original counts double roots. Therefore Lean's distinct condition definitely inconsistent with answer. The Lean theorem says encard = 163; if we could compute it's 161, so statement false. This is major.\n\nNeed final JSON with reasons string concise but detailed. Must be valid JSON. Need no markdown. Use double quotes. Avoid newlines? Can include \\n? JSON string can include plain. We can put single string. Ensure no unescaped quotes inside? Use no quotes or apostrophes. Example:\n\n{\n  \"reasons\": \"The formalization correctly uses ℤ[X] ... However it requires z1 ≠ z2, so it counts only polynomials with two distinct integer zeros. The original problem, as indicated by answer 163, includes repeated integer zeros (e.g. 2010(x-1)^2 and 2010(x+1)^2). Excluding them changes the set and makes the stated count 163 incorrect (the distinct-root count would be 161). Also, while the existence of two distinct roots implicitly forces degree 2 here, a clearer formalization would require a nonzero leading coefficient or degree 2; this is less critical than the distinct-roots error.\",\n  \"is_assistant_correct\": \"Incorrect\"\n}\n\nNeed maybe mention \"zeros\" with multiplicity. Could mention current condition \"∃ z1 z2, z1≠z2\" excludes repeated roots; original answer suggests double roots allowed. Good.\n\nCheck JSON escaping: use ℤ characters allowed. The string contains double quotes? no. Use ≠? okay. Colon? fine. Need \"is_assistant_correct\": \"Incorrect\" exact. Good.\n\nLet's produce final. "
+            }
+          ],
+          "summary": [],
+          "encrypted_content": "d88dc8d7-98d6-4d73-88fb-96bd1a9068dd-0"
+        },
+        {
+          "type": "message",
+          "id": "cf2d94d9-f4a3-4d5c-9b35-e82a01563cfb",
+          "status": "completed",
+          "content": [
+            {
+              "type": "output_text",
+              "annotations": [],
+              "logprobs": [],
+              "text": "{\n  \"reasons\": \"The Lean code correctly models integer-coefficient quadratic-like polynomials in ℤ[X], f(0)=2010, and the finiteness/counting via Set.encard. However, the condition ∃ z1 z2 : ℤ, z1 ≠ z2 ... explicitly requires two distinct integer zeros. The original problem, as reflected by the answer 163, includes repeated integer zeros; for example, polynomials like 2010(x-1)^2 and 2010(x+1)^2 should be counted. Thus the Lean set excludes exactly the repeated-root cases and does not faithfully capture the original problem. The missing explicit nonzero leading coefficient is less critical here because the distinct-root condition implicitly forces degree 2, but a clearer formalization would require degree exactly 2 or a nonzero leading coefficient.\",\n  \"is_assistant_correct\": \"Incorrect\"\n}"
+            }
+          ],
+          "phase": "final_answer",
+          "role": "assistant"
+        }
+      ],
+      "parallel_tool_calls": true,
+      "presence_penalty": 0.0,
+      "previous_response_id": null,
+      "prompt_cache_key": null,
+      "prompt_cache_retention": null,
+      "reasoning": {
+        "effort": "high",
+        "summary": null
+      },
+      "safety_identifier": null,
+      "service_tier": "default",
+      "store": false,
+      "temperature": 1.0,
+      "text": {
+        "format": {
+          "type": "text"
+        },
+        "verbosity": null
+      },
+      "tool_choice": "auto",
+      "tools": [],
+      "top_logprobs": 0,
+      "top_p": 1.0,
+      "truncation": "disabled",
+      "usage": {
+        "input_tokens": 584,
+        "input_tokens_details": {
+          "cached_tokens": 256
+        },
+        "output_tokens": 4260,
+        "output_tokens_details": {
+          "reasoning_tokens": 4076
+        },
+        "total_tokens": 4844
+      },
+      "user": null,
+      "metadata": {}
+    }
+  },
+  "received_at_utc": "2026-10-19T13:27:03.919585+00:00",
+  "parsed_output": {
+    "reasons": "The Lean code correctly models integer-coefficient quadratic-like polynomials in ℤ[X], f(0)=2010, and the finiteness/counting via Set.encard. However, the condition ∃ z1 z2 : ℤ, z1 ≠ z2 ... explicitly requires two distinct integer zeros. The original problem, as reflected by the answer 163, includes repeated integer zeros; for example, polynomials like 2010(x-1)^2 and 2010(x+1)^2 should be counted. Thus the Lean set excludes exactly the repeated-root cases and does not faithfully capture the original problem. The missing explicit nonzero leading coefficient is less critical here because the distinct-root condition implicitly forces degree 2, but a clearer formalization would require degree exactly 2 or a nonzero leading coefficient.",
+    "is_assistant_correct": "Incorrect"
+  },
+  "label_parser": "json"
+}

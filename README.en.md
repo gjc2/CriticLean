@@ -211,8 +211,8 @@ scripts/              # Offline smoke and clean source exports
 docs/protocol.md      # Provenance and replication boundary
 docs/results.md       # Labels, formulas and failures
 data/                 # Local data; excluded
-runs/                 # Local requests/replies; excluded
-reports/              # Local evaluation; excluded
+runs/                 # Experiment records; may be version controlled
+reports/              # Evaluation results; may be version controlled
 RELEASE_FILES.txt     # Source export allowlist
 ```
 
@@ -227,7 +227,16 @@ make github-dir
 
 `make check` makes no real API calls. It checks data handling, unchanged prompts, label parsing, failures and scoring; it does not demonstrate model quality. `make release` exports `releases/lean-critic-lab.zip` plus checksum information. `make github-dir` exports the same allowlisted sources to `releases/lean-critic-lab-github/`, without a `.git` directory.
 
-**This checkout may live inside a larger parent Git repository. Export first, then commit from a separate directory.** The destination below should not exist yet:
+If this project is already initialized as an independent Git repository with a remote configured, commit experiment records and evaluation results directly; no further export or initialization is needed:
+
+```bash
+git add .gitignore README.md README.en.md NOTICE runs reports
+git status --short
+git commit -m "Add experiment records and evaluation results"
+git push
+```
+
+**The export workflow below is for creating a new repository containing only clean sources.** If the sources live inside a larger parent Git repository, export first and commit from a separate directory to avoid including the parent project. The destination below should not exist yet:
 
 ```bash
 mkdir -p ~/Projects
@@ -248,7 +257,7 @@ git remote add origin https://github.com/YOUR_ACCOUNT/lean-critic-lab.git
 git push -u origin main
 ```
 
-The allowlist and `.gitignore` exclude environments, datasets, runs, reports, releases, keys and legacy archives. Inspect `git status` before committing; do not force-add excluded files. Result publication requires a separately reviewed attachment with model, date, settings, denominator, failure counts and dataset revision. Nothing is uploaded automatically.
+`.gitignore` permits committing `runs/` and `reports/`, while still excluding environments (such as `.venv`), `data/`, `releases/`, key files and legacy archives. `make release` and `make github-dir` still export only the sources allowlisted in `RELEASE_FILES.txt`, without `runs/` or `reports/`. Inspect `git status` before committing; do not force-add excluded files. When publishing results, preserve the complete experiment records and include the model, date, settings, denominator, failure counts and dataset revision. Nothing is uploaded automatically.
 
 Original code and documentation use MIT. Third-party data and excerpts retain their respective terms: see [LICENSE](LICENSE) and [NOTICE](NOTICE).
 
