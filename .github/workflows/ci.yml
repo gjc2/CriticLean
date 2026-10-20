@@ -1,0 +1,39 @@
+name: offline-checks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.11', '3.12', '3.13']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install package, Parquet support and build tools
+        run: python -m pip install '.[datasets,dev]'
+      - name: Unit tests and offline mocked workflow
+        run: make check PYTHON=python
+      - name: Build source and wheel distributions
+        run: make build PYTHON=python
+      - name: Export allowlisted source archive and GitHub directory
+        run: make release github-dir PYTHON=python
+      - name: Verify repeatable GitHub source export
+        run: make github-dir PYTHON=python
+      - name: Verify wheel outside checkout
+        shell: bash
+        run: |
+          python -m venv /tmp/critic-wheel-env
+          /tmp/critic-wheel-env/bin/pip install dist/*.whl
+          cd /tmp
+          /tmp/critic-wheel-env/bin/lean-critic --version
+          /tmp/critic-wheel-env/bin/lean-critic doctor --config "$GITHUB_WORKSPACE/configs/deepseek.json"
